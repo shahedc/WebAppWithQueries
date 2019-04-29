@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebAppWithQueries.Models;
 
 namespace WebAppWithQueries.Data
 {
@@ -12,5 +13,6 @@ namespace WebAppWithQueries.Data
             : base(options)
         {
         }
+        public DbSet<WebAppWithQueries.Models.MyItem> MyItems { get; set; }
     }
 }
