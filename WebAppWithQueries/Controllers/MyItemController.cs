@@ -37,6 +37,24 @@ namespace WebAppWithQueries.Controllers
             return View(await myItems.ToListAsync());
         }
 
+        IQueryable<MyItem> GetTopItems(int topX) =>
+            (from m in _context.MyItems.TagWith($"This retrieves top {topX} Items!")
+             orderby m.Id ascending
+             select m).Take(topX);
+
+        IQueryable<T> GetSubset<T>(IQueryable<T> source, int subset) =>
+            source.TagWith($"Getting subset {subset}").Take(subset);
+
+        // GET: MyItem/QueriedDataWithTags
+        public IActionResult QueriedDataWithTags()
+        {
+            var startWithX = 3;
+            var subsetY = 1;
+            var myItems = GetSubset(GetTopItems(startWithX), subsetY).ToList();
+
+            return View(myItems);
+        }
+
         // GET: MyItem/Details/5
         public async Task<IActionResult> Details(int? id)
         {
